@@ -39,13 +39,9 @@ public class Main {
         eventsList.add(event1);
         eventsList.add(event7);
 
-        ArrayList<Event> events = new ArrayList<>(eventsList);
-        //Collections.sort(events);
-        ArrayList<Event> overlappingList = showOverlapping(events);
+        ArrayList<Event> overlappingList = showOverlapping(eventsList);
         displayEvents(overlappingList);
         ArrayList<OverlappingPairs> overlappingPairsList = new ArrayList<>();
-
-
     }
 
     private static void displayEvents(ArrayList<Event> list){
@@ -61,9 +57,6 @@ public class Main {
         Collections.sort(list);
         ArrayList<Event> list2 = (ArrayList<Event>) ((ArrayList<Event>) list).clone();
         ArrayList<Event> finalList = new ArrayList<>();
-        ListIterator<Event> i = list.listIterator();
-        ListIterator<Event> x = list2.listIterator();
-        int c = 1;
         for (int j = 0; j < a.length; j++) {
             for (int k = a.length-1; k > 0; k--) {
                 if((!list.get(j).equals(list2.get(k)))
