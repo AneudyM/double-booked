@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 
 /**
  * Created by aneudy on 02/04/17.
+ * Events
  */
 public class Event implements Comparable<Event>{
     private String name;
@@ -49,7 +50,6 @@ public class Event implements Comparable<Event>{
     }
 
     public int compareTo(Event other){
-
         return start.compareTo(other.start);
     }
 }

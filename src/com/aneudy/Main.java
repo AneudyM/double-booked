@@ -2,13 +2,12 @@ package com.aneudy;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
+import java.util.*;
 
 public class Main {
 
     public static void main(String[] args) {
-        ArrayList<Event> eventsList = new ArrayList<Event>();
+        ArrayList<Event> eventsList = new ArrayList<>();
 
         Duration hour1 = Duration.ofHours(1);
         Duration hour2 = Duration.ofHours(2);
@@ -27,24 +26,28 @@ public class Main {
         Event event4 = new Event("Event 4", now2.plus(half), now3);
         Event event5 = new Event("Event 5", now2.plus(half), now3.plus(half));
         Event event6 = new Event("Event 6", now1.plus(half), now2);
+        Event event7 = new Event("Event 7", now3, now3.plus(hour1));
+        Event event8 = new Event("Event 8", now1, now1.plus(hour3));
+        Event event9 = new Event("Event 9", now2, now2.plus(hour1));
         eventsList.add(event6);
         eventsList.add(event4);
+        eventsList.add(event9);
         eventsList.add(event2);
         eventsList.add(event5);
+        eventsList.add(event8);
         eventsList.add(event3);
         eventsList.add(event1);
+        eventsList.add(event7);
 
-        ArrayList<Event> events = new ArrayList<Event>(eventsList);
-        Collections.sort(events);
+        ArrayList<Event> events = new ArrayList<>(eventsList);
+        //Collections.sort(events);
+        ArrayList<Event> overlappingList = showOverlapping(events);
+        displayEvents(overlappingList);
+        ArrayList<OverlappingPairs> overlappingPairsList = new ArrayList<>();
+
+
     }
 
-    public ArrayList<Event> getOverlappingList(Event other){
-        ArrayList<Event> overlappingEvents = new ArrayList<Event>();
-
-        return overlappingEvents;
-    }
-
-    /*
     private static void displayEvents(ArrayList<Event> list){
         for (int i = 0; i < list.size(); i++){
             System.out.println(list.get(i).getName());
@@ -52,7 +55,26 @@ public class Main {
             System.out.println(list.get(i).getEnd());
         }
     }
-    */
 
-
+    private static ArrayList<Event> showOverlapping(List<Event> list) {
+        Object[] a = list.toArray();
+        Collections.sort(list);
+        ArrayList<Event> list2 = (ArrayList<Event>) ((ArrayList<Event>) list).clone();
+        ArrayList<Event> finalList = new ArrayList<>();
+        ListIterator<Event> i = list.listIterator();
+        ListIterator<Event> x = list2.listIterator();
+        int c = 1;
+        for (int j = 0; j < a.length; j++) {
+            for (int k = a.length-1; k > 0; k--) {
+                if((!list.get(j).equals(list2.get(k)))
+                        && (list.get(j).getStart().isBefore(list2.get(k).getEnd()))
+                        && (list2.get(k).getStart().isBefore(list.get(j).getEnd())))
+                {
+                   finalList.add(list.get(j));
+                   finalList.add(list2.get(k));
+                }
+            }
+        }
+        return finalList;
+    }
 }
