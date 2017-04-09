@@ -39,35 +39,51 @@ public class Main {
         eventsList.add(event1);
         eventsList.add(event7);
 
-        ArrayList<Event> overlappingList = showOverlapping(eventsList);
-        displayEvents(overlappingList);
-        ArrayList<OverlappingPairs> overlappingPairsList = new ArrayList<>();
+        //displayEvents(eventsList);
+        //showOverlapping(eventsList);
+        ArrayList<Pair> pairsList = showOverlapping(eventsList);
+        // Print list of pairs containing overlapping event objects.
+        System.out.println(pairsList);
     }
 
     private static void displayEvents(ArrayList<Event> list){
         for (int i = 0; i < list.size(); i++){
             System.out.println(list.get(i).getName());
-            System.out.println(list.get(i).getStart());
-            System.out.println(list.get(i).getEnd());
         }
     }
 
-    private static ArrayList<Event> showOverlapping(List<Event> list) {
-        Object[] a = list.toArray();
+    private static ArrayList<Pair> showOverlapping(List<Event> list) {
+        int s = list.size();
         Collections.sort(list);
-        ArrayList<Event> list2 = (ArrayList<Event>) ((ArrayList<Event>) list).clone();
+        Pair pairs = new Pair();
+        ArrayList<Pair> pairsList = new ArrayList<>();
+        ArrayList<Event> list2 = (ArrayList<Event>)((ArrayList<Event>)list).clone();
         ArrayList<Event> finalList = new ArrayList<>();
-        for (int j = 0; j < a.length; j++) {
-            for (int k = a.length-1; k > 0; k--) {
+        int n = 0;
+        for (int j = 0; j < s; j++)
+        {
+            for (int k = s-1; k > 0; k--)
+            {
                 if((!list.get(j).equals(list2.get(k)))
                         && (list.get(j).getStart().isBefore(list2.get(k).getEnd()))
                         && (list2.get(k).getStart().isBefore(list.get(j).getEnd())))
                 {
-                   finalList.add(list.get(j));
-                   finalList.add(list2.get(k));
+                        //Here the overlapping Events are chosen
+                        // Combine the two events into one Pair object
+                        pairsList.add(new Pair(list.get(j), list2.get(k)));
+                        System.out.println(
+                                "Pair: " + pairsList.get(n) + "\n" +
+                                        "Events in Pair: " + "\n" +
+                                        "    Left Event (a): " + pairsList.get(n).getLeft().getName() + " " +
+                                        pairsList.get(n).getLeft() + "\n" +
+                                        "    Right Event (b): " + pairsList.get(n).getRight().getName() + " " +
+                                        pairsList.get(n).getRight()
+                        );
+                        System.out.println("/------------------------------------------------------------/");
+                        n++;
                 }
             }
         }
-        return finalList;
+        return pairsList;
     }
 }
