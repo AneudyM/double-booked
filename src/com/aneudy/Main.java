@@ -52,12 +52,12 @@ public class Main {
         }
     }
 
-    private static ArrayList<Pair> showOverlapping(List<Event> list) {
+    private static ArrayList<Pair> showOverlapping(ArrayList<Event> list) {
         int s = list.size();
         Collections.sort(list);
         Pair pairs = new Pair();
         ArrayList<Pair> pairsList = new ArrayList<>();
-        ArrayList<Event> list2 = (ArrayList<Event>)((ArrayList<Event>)list).clone();
+        ArrayList<Event> list2 = (ArrayList<Event>) list.clone();
         ArrayList<Event> finalList = new ArrayList<>();
         int n = 0;
         for (int j = 0; j < s; j++)
@@ -68,16 +68,17 @@ public class Main {
                         && (list.get(j).getStart().isBefore(list2.get(k).getEnd()))
                         && (list2.get(k).getStart().isBefore(list.get(j).getEnd())))
                 {
-                        //Here the overlapping Events are chosen
-                        // Combine the two events into one Pair object
-                        pairsList.add(new Pair(list.get(j), list2.get(k)));
-                        System.out.println(
-                                "Pair: " + pairsList.get(n) + "\n" +
-                                        "Events in Pair: " + "\n" +
-                                        "    Left Event (a): " + pairsList.get(n).getLeft().getName() + " " +
-                                        pairsList.get(n).getLeft() + "\n" +
-                                        "    Right Event (b): " + pairsList.get(n).getRight().getName() + " " +
-                                        pairsList.get(n).getRight()
+                    //Here the overlapping Events are chosen
+                    // Combine the two events into one Pair object
+                    //The following lines are for debugging purposes
+                    pairsList.add(new Pair(list.get(j), list2.get(k)));
+                    System.out.println(
+                            "Pair: " + pairsList.get(n) + "\n" +
+                                     "Events in Pair: " + "\n" +
+                                     "    Left Event (a): " + pairsList.get(n).getLeft().getName() + " " +
+                                     pairsList.get(n).getLeft() + "\n" +
+                                     "    Right Event (b): " + pairsList.get(n).getRight().getName() + " " +
+                                     pairsList.get(n).getRight()
                         );
                         System.out.println("/------------------------------------------------------------/");
                         n++;
@@ -86,4 +87,14 @@ public class Main {
         }
         return pairsList;
     }
+
+    private ArrayList<Pair> cleanDuplicates(ArrayList<Pair> list){
+        ArrayList<Pair> list2 = (ArrayList<Pair>) list.clone();
+
+
+        ArrayList<Pair> cleanList = new ArrayList<Pair>();
+        return cleanList;
+    }
+
+
 }
